@@ -1,0 +1,28 @@
+
+# Having 0- head and 5 tails
+import numpy as np
+
+# Sample dataset (binary outcomes)
+data = np.array([ 0,0,0,0,0])
+
+# Given theta
+theta = 0.8
+
+# Likelihood function
+def likelihood(theta, data):
+    return np.prod(theta**data * (1-theta)**(1-data))
+
+# Log-Likelihood
+def log_likelihood(theta, data):
+    return np.sum(data*np.log(theta) + (1-data)*np.log(1-theta))
+
+# Negative Log-Likelihood
+def neg_log_likelihood(theta, data):
+    return -log_likelihood(theta, data)
+
+# Compute results
+L = likelihood(theta, data)
+LL = log_likelihood(theta, data)
+NLL = neg_log_likelihood(theta, data)
+
+L, LL, NLL
