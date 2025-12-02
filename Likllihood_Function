@@ -1,0 +1,61 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample dataset: 0 heads, 5 tails
+data = np.array([0, 0, 1,1])
+
+# Likelihood function
+def likelihood(theta, data):
+    return np.prod(theta**data * (1 - theta)**(1 - data))
+
+# Log-Likelihood function
+def log_likelihood(theta, data):
+    return np.sum(data * np.log(theta) + (1 - data) * np.log(1 - theta))
+
+# Negative Log-Likelihood
+def neg_log_likelihood(theta, data):
+    return -log_likelihood(theta, data)
+
+# Generate θ values from 0.01 to 0.99 (avoid log(0))
+theta_vals = np.linspace(0.01, 0.99, 500)
+
+# Evaluate all functions over θ range
+likelihoods = [likelihood(t, data) for t in theta_vals]
+log_likelihoods = [log_likelihood(t, data) for t in theta_vals]
+neg_log_likelihoods = [neg_log_likelihood(t, data) for t in theta_vals]
+
+# Plotting
+plt.figure(figsize=(18, 5))
+
+# Plot Likelihood
+plt.subplot(1, 3, 1)
+plt.plot(theta_vals, likelihoods, color='blue', label='Likelihood')
+plt.axvline(x=0.8, color='red', linestyle='--', label='θ = 0.8')
+plt.title('Likelihood Function')
+plt.xlabel('θ')
+plt.ylabel('L(θ)')
+plt.legend()
+plt.grid(True)
+
+# Plot Log-Likelihood
+plt.subplot(1, 3, 2)
+plt.plot(theta_vals, log_likelihoods, color='green', label='Log-Likelihood')
+plt.axvline(x=0.8, color='red', linestyle='--', label='θ = 0.8')
+plt.title('Log-Likelihood Function')
+plt.xlabel('θ')
+plt.ylabel('log L(θ)')
+plt.legend()
+plt.grid(True)
+
+# Plot Negative Log-Likelihood
+plt.subplot(1, 3, 3)
+plt.plot(theta_vals, neg_log_likelihoods, color='orange', label='Neg Log-Likelihood')
+plt.axvline(x=0.8, color='red', linestyle='--', label='θ = 0.8')
+plt.title('Negative Log-Likelihood Function')
+plt.xlabel('θ')
+plt.ylabel('-log L(θ)')
+plt.legend()
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
